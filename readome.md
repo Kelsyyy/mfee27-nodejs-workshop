@@ -1,4 +1,4 @@
 # nodeJS for MFEE27
-``` javascrip
+```javascrip
 let a = 1;
 ```
