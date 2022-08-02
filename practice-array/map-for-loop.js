@@ -21,8 +21,8 @@ let ary = [
 
   //map()
   let result = ary.map((item) => {
-    item.area = `台北市${item.area}` ;
-    return item;
+    let city = `台北市${item.area}`;
+    return {...item, area: city};
     })
   console.log(result);
 
