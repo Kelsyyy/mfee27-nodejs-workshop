@@ -21,22 +21,23 @@ function doWork(job, timer) {
       let brushResult = await doWork('刷牙', 3000);
       console.log('await brush', brushResult);
   
-      // 開發習慣上，不要把 await 跟 then 混在一起寫
-      // 容易搞混執行順序
-      // doWork('AAA', 6000).then((data) => {
-      //   console.log('AAA', data);
-      // });
-  
       let eatResult = await doWork('吃早餐', 5000);
       console.log('await eat', eatResult);
   
       let writeResult = await doWork('寫功課', 3000);
       console.log('await write', writeResult);
+
+      // 開發習慣上，不要把 await 跟 then 混在一起寫
+      // 容易搞混執行順序
+      // doWork('AAA', 6000).then((data) => {
+      //   console.log('AAA', data);
+      // });
+
     } catch (err) {
       // await/async 沒有內建的錯誤處理機制，就用 JS 原本的 try-catch 處理
       console.error(err);
     }
-    return 'a';
+    return 'a'; //不要用return
   }
   let testResult = test();
   testResult.then((data) => {
