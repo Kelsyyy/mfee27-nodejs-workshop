@@ -15,7 +15,7 @@ function doWork(job, timer) {
     // TODO: 要把非同步工作(setTimeout) 放進這個 executor
     // TODO: 失敗就呼叫 reject
     // TODO: 成功就呼叫 resolve
-  }
+  } 
   
   let dt = new Date();
   console.log(`開始工作 at ${dt.toISOString()}`);

@@ -9,7 +9,7 @@ function doWork(job, timer, cb) {
     }, timer);
   }
   
-  let dt = new Date();
+  let dt = new Date(); 
   console.log(`開始工作 at ${dt.toISOString()}`);
   
   // brush -> eat -> write

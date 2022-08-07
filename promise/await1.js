@@ -17,7 +17,7 @@ function doWork(job, timer) {
     // await 一定要寫在 async 函式裡
     // await 暫停 -> 當被 await 的那個 promise 被 resovle 的時候就會解除暫停
     // async 就是暫停的範圍
-    try {
+    try { 
       let brushResult = await doWork('刷牙', 3000);
       console.log('await brush', brushResult);
   

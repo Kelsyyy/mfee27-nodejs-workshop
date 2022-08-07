@@ -9,7 +9,7 @@ function doWork(job, timer, cb) {
     }, timer);
   }
   
-  let dt = new Date();
+  let dt = new Date(); 
   console.log(`開始工作 at ${dt.toISOString()}`);
   // 刷牙(3) => 吃早餐(5) => 寫功課(3)
   // 開始工作 at 2022-08-06T02:46:54.746Z

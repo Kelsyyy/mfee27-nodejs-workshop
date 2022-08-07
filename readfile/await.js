@@ -19,7 +19,7 @@ async function awaitReadFile() {
     } catch (err) {
         console.error(err);
     }
-}
+} 
 
 awaitReadFile();
 

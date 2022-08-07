@@ -10,7 +10,7 @@ function promisReadFile(path, coding) {
       resolve(data);
     });
   });
-}
+} 
 
 promisReadFile('test.txt','utf8')
   .then((data) => console.log(data))

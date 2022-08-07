@@ -9,4 +9,4 @@ fs.readFile(path, coding, (err, data) => {
     return console.error('發生錯誤', err);
   }
   console.log(data);
-});
+}); 

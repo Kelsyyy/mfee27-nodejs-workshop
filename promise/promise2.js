@@ -36,5 +36,5 @@ function doWork(job,timer) {
     })
     .catch((err) => {
         console.error(`在promise裡的`,err)
-    });
+    }); 
     
