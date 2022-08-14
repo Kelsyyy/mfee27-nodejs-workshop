@@ -7,18 +7,18 @@ const fs = require('fs').promises;
 //開始抓資料
 // let stockNo = 2330;
 // let queryDate = moment().format('YYYYMMDD');
+// console.log(queryDate);
 async function readStock() {
     try {
         let stockNo = await fs.readFile('stock.txt', 'utf8')
         // console.log(stockNo);
         let queryDate = moment().format('YYYYMMDD');
-        // console.log(queryDate);
         let response = await axios.get(`https://www.twse.com.tw/exchangeReport/STOCK_DAY?`, {
             params: {
                 response: 'json',
                 date: queryDate,
-                stockNo: stockNo,
-            },
+                stockNo: stockNo
+            },            
         })
         console.log(response.data)
     } catch (err) {
