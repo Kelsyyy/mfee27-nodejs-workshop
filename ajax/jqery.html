@@ -23,7 +23,6 @@
       asyncBtn.addEventListener('click', async function () {
         responseDom.innerText = '開始「非」同步請求';
         // 實作非同步請求
-        // 'http://54.71.133.152:3000'
         $.ajax('http://54.71.133.152:3000', { method: 'GET' })
           .done((data) => {
             responseDom.innerHTML = `jQuery ${data}`;

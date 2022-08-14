@@ -22,7 +22,7 @@ async function readStock() {
             },
         });
         let suggestions = queryNameResponse.data.suggestions
-        console.log(suggestions)
+        // console.log(suggestions)
         let suggestion = suggestions[0] 
         if (suggestion === '(無符合之代碼或名稱)') {
             console.error(suggestion)
