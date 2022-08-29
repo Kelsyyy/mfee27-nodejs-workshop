@@ -1,6 +1,6 @@
 const express = require('express');
 // 初始化 dotenv
-require('dotenv').config();
+// require('dotenv').config();
 // 利用 express 這個框架/函式庫 來建立一個 web application
 const app = express();
 
@@ -8,30 +8,36 @@ const app = express();
 // 至少在同一個檔案中，可以放到最上方統一管理
 // 目標是: 只需要改一個地方，全部的地方就生效
 // 降低漏改到的風險 -> 降低程式出錯的風險
-const port = process.env.SERVER_PORT; //連結我們建立的.env 讀取裡面的資料
+const port = process.env.SERVER_PORT || 3002; //連結我們建立的.env 讀取裡面的資料
+// // 提醒：字串 "0" 是true, 空字串 "" 才是 false
 
+// npm i cors
 const cors = require('cors');
+// 使用這個第三方提供的 cors 中間件
+// 來允許跨源存取
+// 預設都是全部開放
 app.use(cors());
+// 使用情境: 當前後端網址不同時，只想允許自己的前端來跨源存取
+//          就可以利用 origin 這個設定來限制，不然預設是 * (全部其他人都可存取)
+// const corsOptions = {
+//   origin: ['http://localhost:3000'],
+// };
+// app.use(cors(corsOptions));
 
-// 使用資料庫
-const mysql = require('mysql2');
-let pool = mysql
-  .createPool({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    // 限制 pool 連線數的上限
-    connectionLimit: 10,
-  })
-  .promise();
+// 引用 sever 需要的資料庫模組
+const pool = require('./utils/db')
+
+// Content-Type: application/Json
+// 如果要讓 express 認得 json ,要使用這個中間件
+// 這是express內建的中間件
+// 以前版本有內建中間件，但這樣express太肥了，在4.幾之後拆出去要另外安裝，在某個版本又把幾個中間件加回來 ( 例如json )
+app.use(express.json()); //解析是否是json 然後往下執行
 
 // 設定視圖引擎，我們用的是 pug
 // npm i pug
 app.set('view engine', 'pug');
 // 告訴 express 視圖在哪裡
-app.set('views', 'views','pug'); //('views是設定','檔案夾名稱')
+app.set('views', 'views');
 
 // 測試 server side render 的寫法
 app.get('/ssr', (req, res, next) => {
@@ -48,7 +54,6 @@ app.get('/ssr', (req, res, next) => {
 // 中間件裡一定要有 next 或者 response
 // - next() 往下一關走
 // - res.xxx 結束這次的旅程 (req-res cycle)
-// 一定有這三個參數(req, res, next)
 // pipeline pattern
 
 // 一般的 middleware
@@ -67,11 +72,10 @@ app.use((req, res, next) => {
 });
 
 // 路由中間件
-// app.[method] 告訴Express要讀取什麼
+// app.[method]
 // method: get, post, delete, put, patch, ...
 // GET /
-// 只要是網站就要處理 req, res
-app.get('/', (req, res, next) => { // '/' -> 檔網址符合這個/ 就執行後面
+app.get('/', (req, res, next) => {
   console.log('這裡是首頁');
   res.send('Hello Express');
 });
@@ -81,19 +85,12 @@ app.get('/test', (req, res, next) => {
   // next();
 });
 
-// API
-// 列出所有股票代碼
-// GET /stocks
-app.get('/api/1.0/stocks', async (req, res, next) => {
-  // 寫法1:
-  // let result = await pool.execute('SELECT * FROM stocks');
-  // let data = result[0];
-  // 寫法2:
-  let [data] = await pool.execute('SELECT * FROM stocks');
+// 股票資訊模組化後引用進來
+let stockRouter = require('./routers/stocks')
+app.use('/api/1.0/stocks',stockRouter)
 
-  // console.log('result', data);
-  res.json(data);
-});
+let authRouter = require('./routers/auth')
+app.use(authRouter)
 
 // app.get('/test', (req, res, next) => {
 //   console.log('這裡是 test 2');
