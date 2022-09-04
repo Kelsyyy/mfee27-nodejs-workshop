@@ -1,6 +1,6 @@
 const express = require('express');
 // 初始化 dotenv
-// require('dotenv').config();
+require('dotenv').config();
 // 利用 express 這個框架/函式庫 來建立一個 web application
 const app = express();
 
@@ -38,6 +38,15 @@ app.use(express.json()); //解析是否是json 然後往下執行
 app.set('view engine', 'pug');
 // 告訴 express 視圖在哪裡
 app.set('views', 'views');
+
+// 設置靜態檔案
+const path = require('path');
+// express.static => 讓靜態檔案可以有網址
+// http://localhost:3002/uploads/檔案名稱
+app.use(express.static(path.join(__dirname, 'public')));
+// 或是給 prefix
+// http://localhost:3002/public/uploads/檔案名稱
+// app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // 測試 server side render 的寫法
 app.get('/ssr', (req, res, next) => {
@@ -85,12 +94,12 @@ app.get('/test', (req, res, next) => {
   // next();
 });
 
-// 股票資訊模組化後引用進來
-let stockRouter = require('./routers/stocks')
-app.use('/api/1.0/stocks',stockRouter)
+// 股票資訊模組化後引用進來https://www.beauty321.com/post/50436
+let stockRouter = require('./routers/stocks');
+app.use('/api/1.0/stocks',stockRouter);
 
-let authRouter = require('./routers/auth')
-app.use(authRouter)
+let authRouter = require('./routers/auth');
+app.use(authRouter);
 
 // app.get('/test', (req, res, next) => {
 //   console.log('這裡是 test 2');
