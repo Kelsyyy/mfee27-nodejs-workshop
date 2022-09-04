@@ -92,7 +92,7 @@ router.post('/api/1.0/auth/register', uploader.single('photo'), registerRules, a
   // 驗證來自前端的資料
   const validateResult = validationResult(req);
   console.log('validateResult', validateResult);
-  if (!validateResult.isEmpty()) {
+  if (!validateResult.isEmpty()) 
     // validateResult 不是空 -> 有錯誤 -> 回覆給前端
     return res.status(400).json({ errors: validateResult.array() });
   }
